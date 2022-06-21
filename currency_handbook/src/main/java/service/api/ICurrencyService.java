@@ -2,22 +2,23 @@ package service.api;
 
 import dao.api.ICurrencyDao;
 import dao.entity.Currency;
+import dto.CurrencyCreate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-public interface ICurrencyService extends ICurrencyDao{
-    @Override
-    Currency create(Currency currency);
+public interface ICurrencyService {
 
-    @Override
+    Currency create(CurrencyCreate currency);
+
     List<Currency> getAll();
 
-    @Override
-    Currency update(Long id, Currency currency);
 
-    @Override
-    void delete(Long id);
+    Currency update(Long id, CurrencyCreate currencyCreate, LocalDateTime dtUpdate);
 
-    @Override
+
+    void delete(Long id,LocalDateTime date);
+
+
     Currency getById(Long id);
 }

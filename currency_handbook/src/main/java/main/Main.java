@@ -13,12 +13,12 @@ public class Main {
     public static void main(String[] args) {
         Currency currency1 = new Currency("update", "Грязные бабки2", "USD-T", LocalDateTime.now());
         //ICurrencyDao currencyDao = CurrencyDao.getInstance();
-        ICurrencyService currencyDao = CurrencyService.getInstance();
+        //ICurrencyService currencyDao = CurrencyService.getInstance();
 
         //currencyDao.update(2l,currency1);
         //currencyDao.delete(2l);
         //currencyDao.create(currency1);
-        System.out.println("по id " + currencyDao.getById(2l));
+        //System.out.println("по id " + currencyDao.getById(2l));
 
 
         /*List<Currency> all = currencyDao.getAll();

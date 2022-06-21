@@ -4,55 +4,73 @@ import dao.CurrencyDao;
 import dao.api.ICurrencyDao;
 import dao.entity.Currency;
 
+import dto.CurrencyCreate;
+import org.springframework.stereotype.Service;
 import service.api.ICurrencyService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+@Service
+public class CurrencyService implements ICurrencyService {
+    private final ICurrencyDao currencyDao;
 
-public class CurrencyService implements ICurrencyService{
-    private static final CurrencyService instance = new CurrencyService();
-    ICurrencyDao currencyDao = CurrencyDao.getInstance();
+    public CurrencyService(ICurrencyDao currencyDao) {
+        this.currencyDao = currencyDao;
+    }
 
     @Override
-    public Currency create(Currency currency) {
-        if (currency.getCode() != null & currency.getDescription() != null & currency.getName() != null){
+    public Currency create(CurrencyCreate currencyCreate) {
+        if (currencyCreate.getCode() == null & currencyCreate.getDescription() == null & currencyCreate.getName() == null) {
+            throw new IllegalArgumentException("Переданы неправильные данные");
+        }
+            Currency currency = new Currency();
             currency.setDateUpdate(LocalDateTime.now());
-            currency.setDateCreat(LocalDateTime.now());
-            currencyDao.create(currency);
-        } else throw new IllegalArgumentException("Переданы неправильные данные");
-        return currency;
+            currency.setDateCreate(LocalDateTime.now());
+            currency.setName(currencyCreate.getName());
+            currency.setCode(currencyCreate.getCode());
+            currency.setDescription(currencyCreate.getDescription());
+
+            return this.currencyDao.create(currency);
     }
 
     @Override
     public List<Currency> getAll() {
-        return currencyDao.getAll();
+        return this.currencyDao.getAll();
     }
 
     @Override
-    public Currency update(Long id, Currency currency) {
-        if (currency.getCode() != null & currency.getDescription() != null & currency.getName() != null & id>0){
-            currency.setDateUpdate(LocalDateTime.now());
-            currencyDao.update(id,currency);
-        } else throw new IllegalArgumentException("Переданы неправильные данные");
-        return null;
+    public Currency update(Long id, CurrencyCreate currencyCreate, LocalDateTime dtUpdate) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Неверный id");
+        }
+        if (currencyCreate.getCode() == null & currencyCreate.getDescription() == null & currencyCreate.getName() == null) {
+            throw new IllegalArgumentException("Переданы неправильные данные");
+        }
+        Currency currency = new Currency();
+        currency.setName(currencyCreate.getName());
+        currency.setCode(currencyCreate.getCode());
+        currency.setDescription(currencyCreate.getDescription());
+
+        this.currencyDao.update(id,currency,dtUpdate);
+
+        return this.currencyDao.getById(id);
     }
 
     @Override
-    public void delete(Long id) {
-        if(id>0){
-            currencyDao.delete(id);
-        } else throw new IllegalArgumentException("Неверный id");
-
+    public void delete(Long id,LocalDateTime date) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Неверный id");
+        }
+            this.currencyDao.delete(id,date);
     }
 
     @Override
     public Currency getById(Long id) {
-        if(id<=0){
+        if (id == null || id <= 0) {
             throw new IllegalArgumentException("Неверный id");
-        } else return currencyDao.getById(id);
-    }
-
-    public static CurrencyService getInstance(){
-        return instance;
+        }
+        return this.currencyDao.getById(id);
     }
 }
+
+

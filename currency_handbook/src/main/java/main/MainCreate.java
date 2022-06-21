@@ -14,7 +14,7 @@ public class MainCreate {
         EntityManager entityManager = sessionFactory.createEntityManager();
         entityManager.getTransaction().begin();
         //entityManager.persist();
-        entityManager.persist(new Currency("USD","Грязные бабки", "USD-T", LocalDateTime.now()));
+        entityManager.persist(new Currency("EUR","Грязные бабки", "USD-T", LocalDateTime.now()));
         entityManager.getTransaction().commit();
         entityManager.close();
 

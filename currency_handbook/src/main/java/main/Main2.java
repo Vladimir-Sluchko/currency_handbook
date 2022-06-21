@@ -4,14 +4,11 @@ import main.exampleXML.api.IA;
 import main.exampleXML.api.IB;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.w3c.dom.ls.LSOutput;
-
-import java.sql.SQLOutput;
 
 public class Main2 {
     public static void main(String[] args) {
         ApplicationContext context =
-                new ClassPathXmlApplicationContext("app.xml");
+                new ClassPathXmlApplicationContext("src/main/webapp/WEB-INF/app-servlet.xml");
         IB beanB1 = context.getBean(IB.class);
         IB beanB2 = context.getBean("singletonB2",IB.class);
         IB beanB3 = context.getBean(IB.class);
