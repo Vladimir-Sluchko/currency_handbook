@@ -1,15 +1,11 @@
 package dao.entity;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import controllers.utils.json.LocalDateTimeDeserializer;
 import controllers.utils.json.LocalDateTimeSerializer;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -27,17 +23,13 @@ public class Currency implements Serializable {
     public Currency() {
     }
 
-    public Currency(String name, String description, String code, LocalDateTime dateCreat) {
+    public Currency(String name, String description,
+                    String code, LocalDateTime dateCreate,
+                    LocalDateTime dateUpdate) {
         this.name = name;
         this.description = description;
         this.code = code;
-        this.dateCreate = dateCreat;
-    }
-
-    public Currency(LocalDateTime dateUpdate, String name, String description, String code) {
-        this.name = name;
-        this.description = description;
-        this.code = code;
+        this.dateCreate = dateCreate;
         this.dateUpdate = dateUpdate;
     }
 
@@ -100,15 +92,5 @@ public class Currency implements Serializable {
         this.dateUpdate = dateUpdate;
     }
 
-    @Override
-    public String toString() {
-        return "Currency{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", code='" + code + '\'' +
-                ", dateCreate=" + dateCreate +
-                ", dateUpdate=" + dateUpdate +
-                '}';
-    }
+
 }

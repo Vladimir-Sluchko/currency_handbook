@@ -12,12 +12,13 @@ public interface ICurrencyService {
     Currency create(CurrencyCreate currency);
 
     List<Currency> getAll();
+    List<Currency> getAll(String name);
 
 
     Currency update(Long id, CurrencyCreate currencyCreate, LocalDateTime dtUpdate);
 
 
-    void delete(Long id,LocalDateTime date);
+    //void delete(Long id,LocalDateTime date);
 
 
     Currency getById(Long id);

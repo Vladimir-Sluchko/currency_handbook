@@ -1,6 +1,6 @@
 package service;
 
-import dao.CurrencyDao;
+
 import dao.api.ICurrencyDao;
 import dao.entity.Currency;
 
@@ -10,6 +10,8 @@ import service.api.ICurrencyService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+
 @Service
 public class CurrencyService implements ICurrencyService {
     private final ICurrencyDao currencyDao;
@@ -30,12 +32,17 @@ public class CurrencyService implements ICurrencyService {
             currency.setCode(currencyCreate.getCode());
             currency.setDescription(currencyCreate.getDescription());
 
-            return this.currencyDao.create(currency);
+            return this.currencyDao.save(currency);
     }
 
     @Override
     public List<Currency> getAll() {
-        return this.currencyDao.getAll();
+        return this.currencyDao.findAll();
+    }
+
+    @Override
+    public List<Currency> getAll(String name) {
+        return currencyDao.findByName(name);
     }
 
     @Override
@@ -43,33 +50,37 @@ public class CurrencyService implements ICurrencyService {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException("Неверный id");
         }
-        if (currencyCreate.getCode() == null & currencyCreate.getDescription() == null & currencyCreate.getName() == null) {
-            throw new IllegalArgumentException("Переданы неправильные данные");
+        Currency currency = this.getById(id);
+        if(!currency.getDateUpdate().equals(dtUpdate)){
+            throw new IllegalArgumentException("Валюта уже была обнавлена");
         }
-        Currency currency = new Currency();
+
         currency.setName(currencyCreate.getName());
         currency.setCode(currencyCreate.getCode());
         currency.setDescription(currencyCreate.getDescription());
 
-        this.currencyDao.update(id,currency,dtUpdate);
+        this.currencyDao.save(currency);
 
-        return this.currencyDao.getById(id);
+        return this.getById(id);
     }
 
-    @Override
+    /*@Override
     public void delete(Long id,LocalDateTime date) {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException("Неверный id");
         }
             this.currencyDao.delete(id,date);
-    }
+    }*/
 
     @Override
     public Currency getById(Long id) {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException("Неверный id");
         }
-        return this.currencyDao.getById(id);
+        return this.currencyDao
+                .findById(id)
+                .orElseThrow(() ->{throw new IllegalArgumentException("Не нашли такой валюты");
+                });
     }
 }
 

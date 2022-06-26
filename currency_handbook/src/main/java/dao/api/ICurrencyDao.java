@@ -1,23 +1,19 @@
 package dao.api;
 
 import dao.entity.Currency;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-public interface ICurrencyDao extends ICRUD<Currency,Long,LocalDateTime> {
-    @Override
-    Currency create(Currency currency);
+@Repository
+public interface ICurrencyDao extends JpaRepository<Currency,Long> {
 
-    @Override
-    List<Currency> getAll();
+    List<Currency> findByName(String name);
 
-    @Override
-    Currency update(Long id, Currency currency, LocalDateTime dtUpdate);
 
-    @Override
-    void delete(Long id, LocalDateTime date);
+    //Currency update(Long id, Currency currency, LocalDateTime dtUpdate);
 
-    @Override
-    Currency getById(Long id);
+    //void delete(Long id, LocalDateTime date);
+
 }
