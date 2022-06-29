@@ -6,4 +6,5 @@ controllers/CurrencyController.class
 service/CurrencyService.class
 dao/entity/Currency.class
 dto/CurrencyRead.class
+controllers/advices/GlobalHandler.class
 controllers/utils/json/LocalDateTimeDeserializer.class
